@@ -28,6 +28,6 @@ public class MySQLJBDConnectionProvider implements ConnectionProvider
         {
             throw new Exception(errorMessage);
         }
-        return null;
+        return connection;
     }
 }

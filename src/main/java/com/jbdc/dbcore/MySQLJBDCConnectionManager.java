@@ -14,7 +14,7 @@ public class MySQLJBDCConnectionManager implements DatabaseManager
     private String user;
     private String password;
 
-    public MySQLJBDCConnectionManager(ConnectionProvider connectionProvider, String database, String user, String password) {
+    public MySQLJBDCConnectionManager(String database, String user, String password) {
         this.connectionProvider = new MySQLJBDConnectionProvider();
         this.database = database;
         this.user = user;
@@ -35,7 +35,7 @@ public class MySQLJBDCConnectionManager implements DatabaseManager
                 resultList.add(resultSet.getString(1));
             }
         }
-        return null;
+        return resultList;
     }
 
     @Override

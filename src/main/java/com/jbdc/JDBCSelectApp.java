@@ -1,39 +1,25 @@
 package com.jbdc;
 
+import com.jbdc.dbcore.DatabaseManager;
+import com.jbdc.dbcore.MySQLJBDCConnectionManager;
+
 import java.sql.*;
+import java.util.List;
 
 public class JDBCSelectApp
 {
     public static void main(String[] args)
     {
-        try (Connection connection = DriverManager.getConnection(
-                "jdbc:mariadb://127.0.0.1:3306/company_db",
-                "company",
-                "company"))
+        DatabaseManager databaseManager = new MySQLJBDCConnectionManager("company_db", "company", "company");
+        try
         {
-            if (connection != null)
+            List<String> resultList = databaseManager.executeSelect("SELECT COUNTRY_NAME FROM countries WHERE COUNTRY_NAME LIKE 'A%'");
+            for (String value: resultList)
             {
-                System.out.println("Connection created successfully!");
+                System.out.println(value);
             }
-            else
-            {
-                System.out.println("Connection creation failed!");
-            }
-            Statement statement = connection.createStatement();
-            String sql = "SELECT COUNTRY_NAME FROM countries WHERE COUNTRY_NAME LIKE 'A%'";
-            ResultSet resultSet = statement.executeQuery(sql);
+        }
 
-            String countryName;
-            while (resultSet.next())
-            {
-                countryName = resultSet.getString(1);
-                System.out.println(countryName);
-            }
-        }
-        catch (SQLException e)
-        {
-            System.out.println(e.getSQLState() + " message: " + e.getMessage());
-        }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
