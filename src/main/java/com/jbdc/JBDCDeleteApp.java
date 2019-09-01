@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class JDBCInsertApp
+public class JBDCDeleteApp
 {
     public static void main(String[] args)
     {
@@ -22,13 +22,11 @@ public class JDBCInsertApp
             {
                 System.out.println("Connection creation failed!");
             }
-            String sql = "INSERT INTO countries (COUNTRY_ID, COUNTRY_NAME, REGION_ID) VALUES (?, ?, ?)";
+            String sql = "DELETE FROM employees WHERE EMPLOYEE_ID = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
 
 
-            statement.setString(1, "po");
-            statement.setString(2, "polska");
-            statement.setInt(3, 2);
+           statement.setInt(1, 107);
 
             statement.executeUpdate();
         }
