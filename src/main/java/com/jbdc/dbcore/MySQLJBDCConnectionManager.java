@@ -39,8 +39,17 @@ public class MySQLJBDCConnectionManager implements DatabaseManager
     }
 
     @Override
-    public void executeUpdate(String sql)
+    public void executeUpdate(String sql) throws Exception
     {
+        try (Connection connection = connectionProvider.createLocalConnections(database, user, password))
+        {
+            Statement statement = connection.createStatement();
+            int resultUpdate = statement.executeUpdate(sql);
 
+            if (resultUpdate == 0)
+            {
+                throw new Exception("Nothing was changed");
+            }
+        }
     }
 }
